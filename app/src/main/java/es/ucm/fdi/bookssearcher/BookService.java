@@ -96,6 +96,4 @@ public class BookService {
 
         return data;
     }
-
-
 }
