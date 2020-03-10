@@ -3,7 +3,6 @@ package es.ucm.fdi.bookssearcher;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
@@ -12,7 +11,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class BookLoader extends AsyncTaskLoader<String> {
+public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
 
     private static final String DEBUG_TAG = BookLoader.class.getSimpleName();
 
@@ -80,11 +79,12 @@ public class BookLoader extends AsyncTaskLoader<String> {
     }
 
 
-
     @Nullable
     @Override
-    public String loadInBackground() {
-        return null;
+    public List<BookInfo> loadInBackground() {
+
+
+
     }
 
 }

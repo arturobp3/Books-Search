@@ -13,11 +13,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class BookService {
 
-    private static final String DEBUG_TAG = BookService.class.getSimpleName();;
+    private static final String DEBUG_TAG = BookService.class.getSimpleName();
+    ;
     private final String BOOK_VOLUME_BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
 
     // Reads an InputStream and converts it to a String.
@@ -30,7 +33,7 @@ public class BookService {
     }
 
 
-    private String createURL(String queryString, String printType, String baseURL){
+    private String createURL(String queryString, String printType, String baseURL) {
         // Parameter for the search string
         final String QUERY_PARAM = "q";
         // Parameter to limit search results.
@@ -85,15 +88,19 @@ public class BookService {
         JSONObject data = null;
         try {
             String info = this.downloadUrl(url);
-            data = new JSONObject(info);
+            List<BookInfo> books = BookInfo.fromJsonResponse(info);
 
-            System.out.println(data.toString());
 
 
         } catch (IOException | JSONException e) {
             System.out.println("Ha habido un error en BookService: " + e.getStackTrace());
         }
 
+        Log.d(DEBUG_TAG, "The JSON is: " + data);
+
         return data;
     }
+
 }
+
+

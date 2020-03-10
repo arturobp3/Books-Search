@@ -25,5 +25,8 @@ public class BookLoaderCallbacks implements LoaderManager.LoaderCallbacks<String
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader loader) { }
+    public void onLoaderReset(@NonNull Loader loader) {
+
+
+    }
 }
