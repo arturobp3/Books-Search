@@ -44,7 +44,7 @@ public class BookService {
         // Build up the query URI, limiting results to 5 printed books.
         Uri builtURI = Uri.parse(baseURL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, queryString)
-                .appendQueryParameter(MAX_RESULTS, "5")
+                .appendQueryParameter(MAX_RESULTS, "40")
                 .appendQueryParameter(PRINT_TYPE, printType)
                 .build();
 

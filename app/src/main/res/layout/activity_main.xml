@@ -120,7 +120,7 @@
     </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/bookRecyclerView"
         android:layout_width="310dp"
         android:layout_height="277dp"
         android:layout_marginStart="8dp"

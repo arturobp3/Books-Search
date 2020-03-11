@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +14,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private final int BOOK_LOADER_ID = 501;
     private BookLoaderCallbacks bookLoaderCallbacks = new BookLoaderCallbacks();
+    private BooksResultListAdapter bookAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         if(loaderManager.getLoader(BOOK_LOADER_ID) != null){
             loaderManager.initLoader(BOOK_LOADER_ID,null, bookLoaderCallbacks);
         }
+
+        RecyclerView bookRecyclerView = findViewById(R.id.bookRecyclerView);
+        bookAdapter = new BooksResultListAdapter(this, new ArrayList<BookInfo>());
+
+        bookRecyclerView.setAdapter(bookAdapter);
+        bookRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void searchBooks(View view) {
@@ -44,5 +56,10 @@ public class MainActivity extends AppCompatActivity {
         queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString);
         queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType);
         LoaderManager.getInstance(this).restartLoader(BOOK_LOADER_ID, queryBundle, bookLoaderCallbacks);
+    }
+
+    void updateBooksResultList(List<BookInfo> bookInfos) {
+        bookAdapter.setBooksData(bookInfos);
+        bookAdapter.notifyDataSetChanged();
     }
 }

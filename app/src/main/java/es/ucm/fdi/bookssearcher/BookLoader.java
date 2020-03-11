@@ -84,7 +84,5 @@ public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
     public List<BookInfo> loadInBackground() {
 
 
-
     }
-
 }
