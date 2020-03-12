@@ -4,85 +4,62 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AsyncTaskLoader<D>, donde D es el tipo de dato que queremos cargar.
+ */
 public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
 
     private static final String DEBUG_TAG = BookLoader.class.getSimpleName();
 
-    private String mQueryString;
+    private String queryString, printType;
     private BookService bookService;
-    private Context context;
 
-    public BookLoader(Context context, String queryString) {
+    public BookLoader(Context context, String queryString, String printType) {
         super(context);
-        this.context = context;
-        mQueryString = queryString;
-        bookService = new BookService();
+        this.queryString = queryString;
+        this.printType = printType;
+        this.bookService = new BookService();
     }
 
-    private boolean internetConnectionAvailable(){
-
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        /*NetworkInfo networkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        boolean isWifiConn = networkInfo.isConnected();
-        networkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        boolean isMobileConn = networkInfo.isConnected();*/
-
-        /*Log.d(DEBUG_TAG, "Wifi connected: " + isWifiConn);
-        Log.d(DEBUG_TAG, "Mobile connected: " + isMobileConn);*/
-        //return (isMobileConn || isWifiConn);
-
-        // AL DESCOMENTAR ESAS INSTRUCCIONES DE ARRIBA, PONE QUE NO SE PUEDE CON LA API 26 DE ANDROID
-
-
-        NetworkInfo activeNetwork = connMgr.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnected();
-
-        return isConnected;
-    }
-
-
-    @Nullable
-    public String loadInBackground(String queryString, String printType) {
-
-        if (internetConnectionAvailable()) {
-            JSONObject json = bookService.getBookInfoJson(queryString, printType);
-            if(json != null){
-
-                // ASI SE PUEDE ACCEDER A LOS DATOS
-
-                /*JSONArray menuItemArray = data.getJSONArray("menuitem");
-                JSONObject thirdItem = menuItemArray.getJSONObject(2);
-                String onClick = thirdItem.getString("onclick");*/
-            } else{
-
-
-            }
-        } else{
-
-        }
-
-
-        return "Hola";
-    }
-
-
+    /**
+     * LoaderManager llama a esta función automáticamente al crear el Loader.
+     */
     protected void onStartLoading() {
         forceLoad();
     }
 
-
-    @Nullable
-    @Override
-    public List<BookInfo> loadInBackground() {
-
-
+    private List<BookInfo> loadData(String queryString, String printType) {
+        List<BookInfo> data;
+        data = bookService.getBookInfoJson(queryString, printType);
+        if(data != null){
+            return data;
+        } else{
+            //TODO: Mensaje de no hay libros encontrados en la pantalla??
+            return null;
+        }
     }
+
+
+    /**
+     * Función que se ejecuta en otro thread distinto al UI Thread (o Main Thread). Los resultados
+     * se pasan directamente al UI Thread por medio de la función onLoadFinished() del callback del
+     * LoaderManager.
+     */
+    @Override
+    @Nullable
+    public List<BookInfo> loadInBackground() {
+        List<BookInfo> data;
+        data = loadData(queryString, printType);
+        return data;
+    }
+
 }

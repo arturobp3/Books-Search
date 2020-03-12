@@ -55,6 +55,7 @@ public class BookService {
         InputStream inputStream = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
+        //TODO: SOLO 500?? a lo mejor hacen falta más
         int len = 500;
         HttpURLConnection conn = null;
         try {
@@ -65,9 +66,10 @@ public class BookService {
             // Start the query
             conn.connect();
             int response = conn.getResponseCode();
-            Log.d(DEBUG_TAG, "The response is: " + response);
-            inputStream = conn.getInputStream();
 
+            Log.d(DEBUG_TAG, "The code response is: " + response);
+
+            inputStream = conn.getInputStream();
             // Convert the InputStream into a string
             String contentAsString = convertInputToString(inputStream, len);
             return contentAsString;
@@ -82,23 +84,20 @@ public class BookService {
     }
 
 
-    public JSONObject getBookInfoJson(String queryString, String printType) {
-
+    public List<BookInfo> getBookInfoJson(String queryString, String printType) {
         String url = this.createURL(queryString, printType, this.BOOK_VOLUME_BASE_URL);
-        JSONObject data = null;
+        List<BookInfo> books = null;
         try {
             String info = this.downloadUrl(url);
-            List<BookInfo> books = BookInfo.fromJsonResponse(info);
-
-
+            books = BookInfo.fromJsonResponse(info);
 
         } catch (IOException | JSONException e) {
             System.out.println("Ha habido un error en BookService: " + e.getStackTrace());
         }
 
-        Log.d(DEBUG_TAG, "The JSON is: " + data);
+        Log.d(DEBUG_TAG, "The JSON is: " + books);
 
-        return data;
+        return books;
     }
 
 }

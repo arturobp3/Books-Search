@@ -8,6 +8,8 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,9 +21,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int BOOK_LOADER_ID = 501;
+    private final int BOOK_LOADER_ID = 502;
     private BookLoaderCallbacks bookLoaderCallbacks = new BookLoaderCallbacks();
+    private RecyclerView bookRecyclerView;
     private BooksResultListAdapter bookAdapter;
+
+
+    /**
+     * Chequea si hay conexión de Internet disponible. Es mejor hacerlo aquí ya que se puede poner
+     * en la función Search y de esa manera no se crean Loaders.
+     */
+    private boolean internetConnectionAvailable(){
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = null;
+        if (connMgr != null) {
+            activeNetwork = connMgr.getActiveNetworkInfo();
+        }
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         if(loaderManager.getLoader(BOOK_LOADER_ID) != null){
-            loaderManager.initLoader(BOOK_LOADER_ID,null, bookLoaderCallbacks);
+            loaderManager.initLoader(BOOK_LOADER_ID, null, bookLoaderCallbacks);
         }
 
-        RecyclerView bookRecyclerView = findViewById(R.id.bookRecyclerView);
+        bookRecyclerView = findViewById(R.id.bookRecyclerView);
         bookAdapter = new BooksResultListAdapter(this, new ArrayList<BookInfo>());
 
         bookRecyclerView.setAdapter(bookAdapter);
@@ -45,17 +62,19 @@ public class MainActivity extends AppCompatActivity {
         String authorText = ((EditText)findViewById(R.id.authorText)).getText().toString();
         String titleText = ((EditText)findViewById(R.id.titleText)).getText().toString();
 
-        // Indica si es "all", "books", "magazines"
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        RadioButton rb = radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
+        if(internetConnectionAvailable() && (authorText.length() != 0 || titleText.length() != 0)) {
+            // Indica si es "all", "books", "magazines"
+            RadioGroup radioGroup = findViewById(R.id.radioGroup);
+            RadioButton rb = radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
 
-        String queryString = authorText + " " + titleText;
-        String printType = rb.getText().toString();
+            String queryString = authorText + " " + titleText;
+            String printType = rb.getText().toString();
 
-        Bundle queryBundle = new Bundle();
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString);
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType);
-        LoaderManager.getInstance(this).restartLoader(BOOK_LOADER_ID, queryBundle, bookLoaderCallbacks);
+            Bundle queryBundle = new Bundle();
+            queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString);
+            queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType);
+            LoaderManager.getInstance(this).restartLoader(BOOK_LOADER_ID, queryBundle, bookLoaderCallbacks);
+        }
     }
 
     void updateBooksResultList(List<BookInfo> bookInfos) {
