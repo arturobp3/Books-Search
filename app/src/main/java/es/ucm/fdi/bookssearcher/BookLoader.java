@@ -20,13 +20,13 @@ public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
 
     private static final String DEBUG_TAG = BookLoader.class.getSimpleName();
 
-    private String queryString, printType;
+    private String mQueryString, mPrintType;
     private BookService bookService;
 
     public BookLoader(Context context, String queryString, String printType) {
         super(context);
-        this.queryString = queryString;
-        this.printType = printType;
+        mQueryString = queryString;
+        mPrintType = printType;
         this.bookService = new BookService();
     }
 
@@ -58,7 +58,7 @@ public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
     @Nullable
     public List<BookInfo> loadInBackground() {
         List<BookInfo> data;
-        data = loadData(queryString, printType);
+        data = loadData(mQueryString, mPrintType);
         return data;
     }
 

@@ -28,17 +28,23 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
      * datos a cada ViewHolder para que el LayoutManager lo muestre en la pantalla.
      */
     class BookViewHolder extends RecyclerView.ViewHolder {
-        private TextView bookItemView;
-        private RecyclerView.Adapter parentAdapter;
+        public String title;
+        public String author;
+        public String url;
 
-        public BookViewHolder(@NonNull View itemView, BooksResultListAdapter adapter) {
+        public BookViewHolder(@NonNull View itemView) {
             super(itemView);
             // Get the layout
 
-            //TODO:: creo que no es titleText
-            bookItemView = itemView.findViewById(R.id.titleText);
+            //TODO: Esto está mal, creo que habría que poner la view, no el string
+            this.title = itemView.findViewById(R.id.titleItem).toString();
+            this.author = itemView.findViewById(R.id.authorsItem).toString();
+            this.url = itemView.findViewById(R.id.urlItem).toString();
+
             // Associate with this adapter
-            this.parentAdapter = adapter;
+
+
+
         }
 
     }
@@ -51,10 +57,8 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Create view from layout
-
-        //TODO: creo que habría que crear otro layout para esto
         View itemView = inflater.inflate(R.layout.result_list_item, parent, false);
-        return new BookViewHolder(itemView, this);
+        return new BookViewHolder(itemView);
     }
 
 
@@ -68,9 +72,9 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
         // Retrieve the data for that position
         BookInfo current = mBooksData.get(position);
         // Add the data to the view
-
-        //TODO: hay que añadir la info al bookItemView, no sé como
-        //holder.bookItemView.setText(current);
+        holder.title = current.getTitle();
+        holder.author = current.getAuthors();
+        holder.url = current.getInfoLink().toString();
     }
 
 
