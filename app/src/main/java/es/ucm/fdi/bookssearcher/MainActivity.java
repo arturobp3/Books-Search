@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         public Loader<List<BookInfo>> onCreateLoader(int id, @Nullable Bundle args) {
         /*return new BookLoader((Context)args.get("context"), args.getString(EXTRA_QUERY),
                 args.getString(EXTRA_PRINT_TYPE));*/
+            ((TextView)findViewById(R.id.infoText)).setText("Loading...");
             return new BookLoader(MainActivity.this, args.getString(EXTRA_QUERY),
                     args.getString(EXTRA_PRINT_TYPE));
         }
@@ -113,7 +115,14 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onLoadFinished(@NonNull Loader<List<BookInfo>> loader, List<BookInfo> data) {
-            updateBooksResultList(data);
+            if (data!= null) {
+                updateBooksResultList(data);
+                ((TextView)findViewById(R.id.infoText)).setText("Results");
+            }
+            else {
+                updateBooksResultList(new ArrayList<BookInfo>());
+                ((TextView)findViewById(R.id.infoText)).setText("No Results Found");
+            }
         }
 
 

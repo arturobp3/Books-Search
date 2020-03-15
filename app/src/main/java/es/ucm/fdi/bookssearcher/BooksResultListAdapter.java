@@ -1,6 +1,8 @@
 package es.ucm.fdi.bookssearcher;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultListAdapter.BookViewHolder> {
@@ -27,7 +28,7 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
      * dentro del RecyclerView. Cada ViewHolder mantiene un conjunto de datos. El adapter añade
      * datos a cada ViewHolder para que el LayoutManager lo muestre en la pantalla.
      */
-    class BookViewHolder extends RecyclerView.ViewHolder {
+    class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
         public TextView author;
         public TextView url;
@@ -40,11 +41,19 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
             this.url = itemView.findViewById(R.id.urlItem);
 
             // Associate with this adapter
-
-
-
+            itemView.setOnClickListener(this);
         }
 
+        /**
+         * Inicia un nuevo Activity con la intención de mostrar la URL en un browser.
+         */
+        @Override
+        public void onClick(View view) {
+            Uri uri = Uri.parse(this.url.getText().toString());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+            view.getContext().startActivity(intent);
+        }
     }
 
     /**
