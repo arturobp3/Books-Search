@@ -50,11 +50,12 @@ public class BookInfo {
                     if(volumeInfo.has("authors")) {
                         JSONArray authorsArray = (JSONArray) volumeInfo.get("authors");
                         authors = "";
-                        // En caso de haber más de un autor, los concatena con comas y al final quita la coma sobrante.
-                        for (int j = 0; j < authorsArray.length(); j++) {
-                            authors += authorsArray.get(j) + ", ";
-                            if (j == authorsArray.length() - 1) {
-                                authors = authors.substring(0, authors.length() - 2);
+
+                        if(authorsArray.length() > 0) {
+                            authors += authorsArray.get(0);
+
+                            for (int j = 1; j < authorsArray.length(); j++) {
+                                authors += ", " + authorsArray.get(j);
                             }
                         }
                     }

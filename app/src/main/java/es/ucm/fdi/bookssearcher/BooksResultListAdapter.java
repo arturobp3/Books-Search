@@ -28,18 +28,16 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
      * datos a cada ViewHolder para que el LayoutManager lo muestre en la pantalla.
      */
     class BookViewHolder extends RecyclerView.ViewHolder {
-        public String title;
-        public String author;
-        public String url;
+        public TextView title;
+        public TextView author;
+        public TextView url;
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
             // Get the layout
-
-            //TODO: Esto está mal, creo que habría que poner la view, no el string
-            this.title = itemView.findViewById(R.id.titleItem).toString();
-            this.author = itemView.findViewById(R.id.authorsItem).toString();
-            this.url = itemView.findViewById(R.id.urlItem).toString();
+            this.title = itemView.findViewById(R.id.titleItem);
+            this.author = itemView.findViewById(R.id.authorsItem);
+            this.url = itemView.findViewById(R.id.urlItem);
 
             // Associate with this adapter
 
@@ -72,9 +70,9 @@ public class  BooksResultListAdapter extends RecyclerView.Adapter<BooksResultLis
         // Retrieve the data for that position
         BookInfo current = mBooksData.get(position);
         // Add the data to the view
-        holder.title = current.getTitle();
-        holder.author = current.getAuthors();
-        holder.url = current.getInfoLink().toString();
+        holder.title.setText(current.getTitle());
+        holder.author.setText(current.getAuthors());
+        holder.url.setText(current.getInfoLink().toString());
     }
 
 

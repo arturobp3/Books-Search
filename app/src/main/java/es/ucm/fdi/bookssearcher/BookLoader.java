@@ -3,6 +3,7 @@ package es.ucm.fdi.bookssearcher;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,7 @@ public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
         data = bookService.getBookInfoJson(queryString, printType);
         if(data != null){
             return data;
+
         } else{
             //TODO: Mensaje de no hay libros encontrados en la pantalla??
             return null;
@@ -59,6 +61,7 @@ public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
     public List<BookInfo> loadInBackground() {
         List<BookInfo> data;
         data = loadData(mQueryString, mPrintType);
+
         return data;
     }
 
