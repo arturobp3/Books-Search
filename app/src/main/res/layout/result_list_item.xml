@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+    <!-- A CardView that contains a TextView -->
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="#D8D7D7"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="7dp">
 
         <LinearLayout
-            android:id="@+id/cardListLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:baselineAligned="false"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editText6"
+            <TextView
+                android:id="@+id/titleItem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:layout_height="match_parent"
+                android:layout_weight="0.30"
                 android:text="Titulo" />
 
-            <EditText
-                android:id="@+id/editText7"
+            <TextView
+                android:id="@+id/authorsItem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:layout_height="match_parent"
+                android:layout_weight="0.30"
                 android:text="Autores" />
 
-            <EditText
-                android:id="@+id/editText8"
+            <TextView
+                android:id="@+id/urlItem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="URL"
-                android:visibility="visible" />
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:text="URL" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
+
