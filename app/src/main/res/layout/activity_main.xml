@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E3E3E3"
     tools:context=".MainActivity">
 
     <TextView
@@ -67,13 +68,14 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="367dp"
-        android:layout_height="53dp"
+        android:layout_width="362dp"
+        android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="SEARCH BOOKS"
+        android:background="#B8B5B5"
         android:onClick="searchBooks"
+        android:text="SEARCH BOOKS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -121,7 +123,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookRecyclerView"
-        android:layout_width="310dp"
+        android:layout_width="355dp"
         android:layout_height="277dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
