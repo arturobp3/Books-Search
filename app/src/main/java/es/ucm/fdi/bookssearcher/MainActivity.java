@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             RadioGroup radioGroup = findViewById(R.id.radioGroup);
             RadioButton rb = radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
 
-            String queryString = authorText + " " + titleText;
+            String queryString = "inauthor:" + authorText + " intitle:" + titleText;
             String printType = rb.getText().toString();
 
             Bundle queryBundle = new Bundle();

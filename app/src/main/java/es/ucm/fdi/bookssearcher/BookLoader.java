@@ -45,7 +45,6 @@ public class BookLoader extends AsyncTaskLoader<List<BookInfo>> {
             return data;
 
         } else{
-            //TODO: Mensaje de no hay libros encontrados en la pantalla??
             return null;
         }
     }

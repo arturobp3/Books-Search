@@ -47,10 +47,10 @@ public class BookService {
         final String PRINT_TYPE = "printType";
         final String ORDER_BY = "orderBy";
 
-        // Build up the query URI, limiting results to 5 printed books.
+        // Build up the query URI, limiting results to 40 printed books.
         Uri builtURI = Uri.parse(baseURL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, queryString)
-                .appendQueryParameter(MAX_RESULTS, "5")
+                .appendQueryParameter(MAX_RESULTS, "40")
                 .appendQueryParameter(PRINT_TYPE, printType)
                 .appendQueryParameter(ORDER_BY, "relevance")
                 .build();
